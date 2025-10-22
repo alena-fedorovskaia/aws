@@ -45,6 +45,7 @@ public class IamTest extends IamBaseTest {
   }
 
   @Test(description = "Test verifies 3 IAM policies are created according to the given requirements",
+      groups = "iam",
       dataProvider = "IamPoliciesCreation")
   public void verifyIAMPoliciesCreation(String name, Object actions, String resources, String effect) throws Exception {
     IamHelper.IamPolicy policy = IamHelper.getPolicy(iam, name);
@@ -61,19 +62,19 @@ public class IamTest extends IamBaseTest {
   }
 
   @Test(description = "Test verifies that 3 roles with specified associated policies were created",
-      dataProvider = "IamRolesCreation")
+      groups = "iam", dataProvider = "IamRolesCreation")
   public void verifyIAMRolesCreation(String role, String policy) {
     Assert.assertTrue(IamHelper.listRolePolicies(iam, role).contains(policy));
   }
 
   @Test(description = "Test verifies that 3 groups with specified names and policies were created",
-      dataProvider = "IamGroupsCreation")
+      groups = "iam", dataProvider = "IamGroupsCreation")
   public void verifyIAMGroupsCreation(String group, String policy) {
     Assert.assertTrue(IamHelper.listGroupPolicies(iam, group).contains(policy));
   }
 
   @Test(description = "Test verifies that 3 users with specified names were created in specified groups",
-      dataProvider = "IamUsersCreation")
+      groups = "iam", dataProvider = "IamUsersCreation")
   public void verifyIAMUsersCreation(String userName, String userGroup) {
     Assert.assertTrue(IamHelper.listAllUsers(iam).contains(userName));
     Assert.assertTrue(IamHelper.getGroup(iam, userGroup).contains(userName));
